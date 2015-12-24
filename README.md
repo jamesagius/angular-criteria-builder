@@ -1,2 +1,2 @@
 # angular-criteria-builder
-Dynamic form field criteria builder for search, in he essence of iTunes Smart Playlist ui.
+Dynamic form field criteria builder for search, in the spirit of the iTunes Smart Playlist ui form.
