@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div class="container-fluid" ng-controller="mainCtrl">
+    <div class="row">-</div>
+    <div class="row">
+      <div id="criteriaform" class="col-md-6">
+        <button type="button" ng-click="plus()">+</button>
+        <button type="button" ng-click="minus()">-</button>
+        <div ng-repeat="n in placeholderArray track by $index">
+          <select ng-options="f as f.displayName for f in fields track by f.modelName"
+                  ng-model="placeholderArray[$index].selected" ng-criteria="{{$index}}">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <pre>{{placeholderArray | json}}</pre>
+      </div>
+    </div>
+    <div class="row">-</div>
+  </div>
+
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

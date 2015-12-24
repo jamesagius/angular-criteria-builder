@@ -1,0 +1,11 @@
+{
+  "name": "criteria-builder",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Criteria Builder for AngularJS",
+  "repository": "https://github.com/jamesagius/angular-criteria-builder",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "bower install"
+  }
+}
