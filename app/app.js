@@ -12,6 +12,8 @@ app.controller('mainCtrl', function($scope) {
         { displayName: 'someIntegerField', modelName: 'someIntegerField', type: 'integer'}
     ];
 
+    $scope.anyOrAll = 'all';
+
     $scope.placeholderArray = [{selected: $scope.fields[0]}];
 
     $scope.plus = function() {
@@ -78,16 +80,16 @@ app.directive('ngCriteria', function($compile) {
                             "<option>is before</option>" +
                             "<option>is in the range</option>" +
                             "</select>");
-                        element.parent().append("<div style='width: 150px'><p class='input-group'>" +
-                            " <input id='" + index + "' type='text' class='form-control' uib-datepicker-popup='{{format}}' " +
+                        element.parent().append("<div class='input-group' style='margin-left: 3px'>" +
+                            " <input type='text' uib-datepicker-popup='{{format}}' " +
                             " ng-model='placeholderArray[" + index + "].value'" +
                             " is-open='status.opened' datepicker-options='dateOptions'" +
                             " ng-required='true' close-text='Close' />" +
                             " <span class='input-group-btn'>" +
-                            " <button type='button' class='btn btn-default' ng-click='open($event)'>" +
+                            " <button type='button' class='btn btn-sm' style='padding: 2px 5px' ng-click='open($event)'>" +
                             " <i class='glyphicon glyphicon-calendar'></i></button>" +
                             " </span>" +
-                            " </p></div>");
+                            " </div>");
                         $compile(element.next())(scope);
                         $compile(element.next().next())(scope);
                     } else if (newVal.type == 'integer') {
@@ -100,9 +102,9 @@ app.directive('ngCriteria', function($compile) {
                             "<option>is less than</option>" +
                             "<option>is in the range</option>" +
                             "</select>");
-                        element.parent().append( "<input id='" + index + "'" +
-                            " type='text' ng-model='placeholderArray[" + index + "].value' " +
-                            "placeholder='Enter Value' />" );
+                        element.parent().append( "<input type='text' style='margin-left: 3px' " +
+                            "ng-model='placeholderArray[" + index + "].value'" +
+                            " placeholder='Enter Value' />" );
                         $compile(element.next())(scope);
                         $compile(element.next().next())(scope);
                     } else {
@@ -117,8 +119,8 @@ app.directive('ngCriteria', function($compile) {
                             "<option>begins with</option>" +
                             "<option>ends with</option>" +
                             "</select>");
-                        element.parent().append( "<input id='" + index +
-                            "' type='text' ng-model='placeholderArray[" + index + "].value' " +
+                        element.parent().append( "<input type='text' style='margin-left: 3px' " +
+                            "ng-model='placeholderArray[" + index + "].value' " +
                             "placeholder='Enter Value' />" );
                         $compile(element.next())(scope);
                         $compile(element.next().next())(scope);
@@ -135,8 +137,8 @@ app.directive('ngCriteria', function($compile) {
                         "<option>begins with</option>" +
                         "<option>ends with</option>" +
                         "</select>");
-                    element.parent().append( "<input id='" + index +
-                        "' type='text' ng-model='placeholderArray[" + index + "].value' " +
+                    element.parent().append( "<input type='text' style='margin-left: 3px' " +
+                        "ng-model='placeholderArray[" + index + "].value' " +
                         "placeholder='Enter Value' />" );
                     $compile(element.next())(scope);
                     $compile(element.next().next())(scope);

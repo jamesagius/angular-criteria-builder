@@ -22,16 +22,22 @@
     <div class="row">-</div>
     <div class="row">
       <div id="criteriaform" class="col-md-6">
+        <label>Match</label>
+        <select ng-model="anyOrAll">
+          <option>all</option>
+          <option>any</option>
+        </select>
         <button type="button" ng-click="plus()">+</button>
         <button type="button" ng-click="minus()">-</button>
-        <div ng-repeat="n in placeholderArray track by $index">
+        <div ng-repeat="n in placeholderArray track by $index" class="form-inline">
+          <hr style="margin-top: 3px; margin-bottom: 3px">
           <select ng-options="f as f.displayName for f in fields track by f.modelName"
                   ng-model="placeholderArray[$index].selected" ng-criteria="{{$index}}">
           </select>
         </div>
       </div>
       <div class="col-md-6">
-        <pre>{{placeholderArray | json}}</pre>
+        <pre>{{anyOrAll}}{{placeholderArray | json}}</pre>
       </div>
     </div>
     <div class="row">-</div>
