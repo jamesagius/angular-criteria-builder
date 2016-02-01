@@ -1,0 +1,14 @@
+<div>
+    <label>Match</label>
+    <select ng-model='anyOrAll'>
+        <option>all</option> <option>any</option>
+    </select>
+    <button type='button' ng-click='plus()'>+</button>
+    <button type='button' ng-click='minus()'>-</button>
+    <div ng-repeat='n in criteriaArray track by $index' class='form-inline'>
+        <hr style='margin-top: 3px; margin-bottom: 3px'>
+        <select ng-options='f as f.displayName for f in fields track by f.modelName'
+            ng-model='criteriaArray[$index].selected' >
+        </select>
+    </div>
+</div>
