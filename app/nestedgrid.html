@@ -1,2 +1,4 @@
 <div class="ui-grid-cell-contents" ng-controller="nestedGridCtrl">
-    <div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns ></div>
+    <div ng-style="innerGridStyle" id="dataGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-pagination >
+    </div>
+</div>

@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('myApp', [
-    'ui.bootstrap','ui.grid','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.saveState'
+    'ui.bootstrap','ui.grid','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.saveState', 'ui.grid.pagination'
 ]);
 
 app.directive('pstd', function($compile) {
@@ -63,14 +63,47 @@ app.directive('pstd', function($compile) {
 });
 
 app.controller('nestedGridCtrl', function($scope,$rootScope,$log, uiGridColumnMenuService, myservice) {
+
+    $scope.myservice = myservice;
+    var height = $("#mygrid").innerHeight();
+    height = (height-(height *.10));
+
+    $scope.innerGridStyle = {height: height};
+
     $scope.gridOptions = {
         data: [
             { 'keyA': 'valA1', 'keyB': {a: 'valBa'}, 'keyC' : 'valC'},
             { 'keyA': 'valA2', 'keyB': {a: 'valBb'}, 'keyC' : 'valC'},
             { 'keyA': 'valA3', 'keyB': {a: 'valBc'}, 'keyC' : 'valC'},
             { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            myservice.bigRow
+            myservice.bigRow,
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
+            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'}
+
         ],
+        paginationPageSizes: [10, 20, 30],
+        paginationPageSize: 10,
         multiSelect: false,
         enableRowSelection: true,
         onRegisterApi: function (gridApi){
@@ -107,8 +140,8 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
     $scope.myservice = myservice;
     var height = $("#mygrid").innerHeight();
     height = (height-(height *.10));
-    console.log('height: ' + height);
-    $scope.mystyle = {height: (height-(height *.25)), width: $scope.myservice.width, overflow: 'auto'};
+
+    $scope.mystyle = {height: height, width: $scope.myservice.width, overflow: 'auto'};
 
     $scope.gridOptions = {
         data: [$scope.myservice.data]
@@ -121,7 +154,7 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
 
     $scope.$watch('myservice.width', function(newValue, oldValue) {
         console.log(newValue);
-        $scope.mystyle = {height: height, width: newValue, overflow: 'auto'};
+        $scope.mystyle = {height: height, width: (newValue-10), overflow: 'auto'};
     });
 });
 
@@ -133,7 +166,7 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
 
         var gridWidth = $("#mygrid").innerWidth();
 
-        myservice.width = gridWidth * .25;
+        myservice.width = (gridWidth * .25)-10;
 
         myservice.data = data;
     });
