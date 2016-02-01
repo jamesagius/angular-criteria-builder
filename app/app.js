@@ -176,12 +176,17 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
         $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
     });
 
+    $scope.myservice = myservice;
+    var height = $("#mygrid").innerHeight();
+    height = (height-(height *.10));
+
     $scope.gridOptions = {
         data: [{ 'quickview': '', 'nestedgrid': ''}],
         columnDefs: [{ field: 'quickview', displayName: '', width: '25%', visible: false,
             cellTemplate: 'quickview.html' },
             { field: 'nestedgrid', displayName: '', cellTemplate: 'nestedgrid.html'}],
-        rowHeight: '300px',
+        rowHeight: height,
+        enableColumnMenus: false,
         onRegisterApi: function (gridApi){
             $scope.gridApi = gridApi;
 
