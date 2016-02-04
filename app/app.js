@@ -66,7 +66,7 @@ app.controller('nestedGridCtrl', function($scope,$rootScope,$log, uiGridColumnMe
 
     $scope.myservice = myservice;
     var height = $("#mygrid").innerHeight();
-    height = (height-(height *.10));
+    height = (height-(height *.12));
 
     $scope.innerGridStyle = {height: height};
 
@@ -139,7 +139,7 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
 
     $scope.myservice = myservice;
     var height = $("#mygrid").innerHeight();
-    height = (height-(height *.10));
+    height = (height-(height *.15));
 
     $scope.mystyle = {height: height, width: $scope.myservice.width, overflow: 'auto'};
 
