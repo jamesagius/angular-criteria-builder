@@ -153,7 +153,6 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
     });
 
     $scope.$watch('myservice.width', function(newValue, oldValue) {
-        console.log(newValue);
         $scope.mystyle = {height: height, width: (newValue-10), overflow: 'auto'};
     });
 });
@@ -180,12 +179,29 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
     var height = $("#mygrid").innerHeight();
     height = (height-(height *.10));
 
+    //$scope.gridOptions = {
+    //    data: [{ 'quickview': '', 'nestedgrid': ''}],
+    //    columnDefs: [{ field: 'quickview', displayName: '', width: '25%', visible: false,
+    //        cellTemplate: 'quickview.html' },
+    //        { field: 'nestedgrid', displayName: '', cellTemplate: 'nestedgrid.html'}],
+    //    rowHeight: height,
+    //    enableColumnMenus: false,
+    //    onRegisterApi: function (gridApi){
+    //        $scope.gridApi = gridApi;
+    //
+    //        gridApi.colResizable.on.columnSizeChanged($scope,function(colDef, deltaChange){
+    //            myservice.width = $scope.gridApi.saveState.save().columns[0].width;
+    //        });
+    //
+    //    }
+    //};
+
     $scope.gridOptions = {
-        data: [{ 'quickview': '', 'nestedgrid': ''}],
-        columnDefs: [{ field: 'quickview', displayName: '', width: '25%', visible: false,
-            cellTemplate: 'quickview.html' },
-            { field: 'nestedgrid', displayName: '', cellTemplate: 'nestedgrid.html'}],
-        rowHeight: height,
+        data: [],
+        columnDefs: [
+            { field: 'quickview', displayName: 'Q', width: '25%', visible: false, headerCellTemplate: 'quickviewHeader.html' },
+            { field: 'nestedgrid', displayName: 'G', headerCellTemplate: 'nestedgridHeader.html'}
+        ],
         enableColumnMenus: false,
         onRegisterApi: function (gridApi){
             $scope.gridApi = gridApi;
@@ -195,7 +211,7 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
             });
 
         }
-    };
+    }
 
     myservice.bigRow = {
         'prop_a': 'val_a',
