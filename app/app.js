@@ -39,8 +39,8 @@ app.directive('pstd', function($compile) {
                 } else {
                     var jsonString = stringIt(value);
                     element.html("<table class=\"table table-condensed table-bordered table-hover\" >" +
-                        "<tr ng-repeat=\"(k,v) in { " + jsonString + " }\"><td>{{k}}</td>" +
-                        "<td pstd=\"{{v}}\"></td></tr></table>");
+                        "<tr ng-repeat=\"(k,v) in { " + jsonString + " }\"><td style=\"font-weight: bold; color: black\">{{k}}</td>" +
+                        "<td style=\"font-weight: normal; color: darkgreen\" pstd=\"{{v}}\"></td></tr></table>");
                 }
             } catch (err) {
                 var value = attrs.pstd;
@@ -147,14 +147,15 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
         data: [$scope.myservice.data]
     };
 
+    $scope.$watch('myservice.width', function(newValue, oldValue) {
+        $scope.mystyle = {height: height, width: newValue, overflow: 'auto'};
+    });
+
     $scope.$watch('myservice.data', function(newValue, oldValue) {
         $scope.gridOptions.data.splice(0,1);
         $scope.gridOptions.data.push(newValue);
     });
 
-    $scope.$watch('myservice.width', function(newValue, oldValue) {
-        $scope.mystyle = {height: height, width: (newValue-10), overflow: 'auto'};
-    });
 });
 
 app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
@@ -163,9 +164,11 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
         $scope.gridOptions.columnDefs[0].visible = true;
         $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
 
-        var gridWidth = $("#mygrid").innerWidth();
-
-        myservice.width = (gridWidth * .25)-10;
+        if ($scope.gridApi.saveState.save().columns[0].width == '25%') {
+            var gridWidth = $("#mygrid").innerWidth();
+            var calculatedLeftWidth = (gridWidth * .25) - 20;
+            myservice.width = calculatedLeftWidth;
+        }
 
         myservice.data = data;
     });
@@ -179,23 +182,6 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
     var height = $("#mygrid").innerHeight();
     height = (height-(height *.10));
 
-    //$scope.gridOptions = {
-    //    data: [{ 'quickview': '', 'nestedgrid': ''}],
-    //    columnDefs: [{ field: 'quickview', displayName: '', width: '25%', visible: false,
-    //        cellTemplate: 'quickview.html' },
-    //        { field: 'nestedgrid', displayName: '', cellTemplate: 'nestedgrid.html'}],
-    //    rowHeight: height,
-    //    enableColumnMenus: false,
-    //    onRegisterApi: function (gridApi){
-    //        $scope.gridApi = gridApi;
-    //
-    //        gridApi.colResizable.on.columnSizeChanged($scope,function(colDef, deltaChange){
-    //            myservice.width = $scope.gridApi.saveState.save().columns[0].width;
-    //        });
-    //
-    //    }
-    //};
-
     $scope.gridOptions = {
         data: [],
         columnDefs: [
@@ -207,7 +193,8 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
             $scope.gridApi = gridApi;
 
             gridApi.colResizable.on.columnSizeChanged($scope,function(colDef, deltaChange){
-                myservice.width = $scope.gridApi.saveState.save().columns[0].width;
+                var innerWidth = $("#quickviewDiv").innerWidth();
+                myservice.width = innerWidth - 20;
             });
 
         }
