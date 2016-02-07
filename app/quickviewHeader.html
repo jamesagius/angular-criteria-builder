@@ -1,10 +1,13 @@
 <div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{'cursor': col.cursor}" ng-class="{ 'ngSorted': !noSortVisible }">
     <div id="quickviewDiv" ng-controller="quickviewCtrl" ng-style="mystyle">
-        <div ng-repeat="theRow in gridOptions.data">
-            <table class="table table-condensed table-bordered table-hover" style="margin-bottom: 0px">
-                <tr ng-repeat="(k,v) in theRow"><td style="font-weight: bold; color: black">{{k}}</td>
-                    <td style="font-weight: normal; color: darkgreen" pstd="{{v}}"></td></tr>
-            </table>
+        <div class="panel panel-default" style="margin-bottom: 0px">
+            <div class="panel-heading" style="padding: 5px 5px">Quick View</div>
+            <div class="panel-body" ng-repeat="theRow in gridOptions.data" style="padding: 5px">
+                <table class="table table-condensed table-bordered table-hover" style="margin-bottom: 0px">
+                    <tr ng-repeat="(k,v) in theRow"><td style="font-weight: bold; color: black">{{k}}</td>
+                        <td style="font-weight: normal; color: darkgreen" pstd="{{v}}"></td></tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
