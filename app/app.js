@@ -38,9 +38,9 @@ app.directive('pstd', function($compile) {
                     element.html(value);
                 } else {
                     var jsonString = stringIt(value);
-                    element.html("<table class=\"table table-condensed table-bordered table-hover\" >" +
+                    element.html("<div'><table class=\"table table-condensed table-bordered table-hover\" >" +
                         "<tr ng-repeat=\"(k,v) in { " + jsonString + " }\"><td style=\"font-weight: bold; color: black\">{{k}}</td>" +
-                        "<td style=\"font-weight: normal; color: darkgreen\" pstd=\"{{v}}\"></td></tr></table>");
+                        "<td style=\"font-weight: normal; color: darkgreen\" pstd=\"{{v}}\"></td></tr></table></div>");
                 }
             } catch (err) {
                 var value = attrs.pstd;
@@ -66,7 +66,7 @@ app.controller('nestedGridCtrl', function($scope,$rootScope,$log, uiGridColumnMe
 
     $scope.myservice = myservice;
     var height = $("#mygrid").innerHeight();
-    height = (height-(height *.12));
+    height = (height-2);
 
     $scope.innerGridStyle = {height: height};
 
@@ -139,16 +139,15 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
 
     $scope.myservice = myservice;
     var height = $("#mygrid").innerHeight();
-    height = (height-(height *.15));
-
-    $scope.mystyle = {height: height, width: $scope.myservice.width, overflow: 'auto'};
-
+    height = (height-2);
+console.log('init: ' + $scope.myservice.width);
+    $scope.mystyle = { 'max-height': '500px', width: $scope.myservice.width, overflow: 'auto'};
     $scope.gridOptions = {
         data: [$scope.myservice.data]
     };
 
     $scope.$watch('myservice.width', function(newValue, oldValue) {
-        $scope.mystyle = {height: height, width: newValue, overflow: 'auto'};
+        $scope.mystyle = { 'max-height': '500px', width: newValue, overflow: 'auto'};
     });
 
     $scope.$watch('myservice.data', function(newValue, oldValue) {
@@ -166,7 +165,7 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
 
         if ($scope.gridApi.saveState.save().columns[0].width == '25%') {
             var gridWidth = $("#mygrid").innerWidth();
-            var calculatedLeftWidth = (gridWidth * .25) - 20;
+            var calculatedLeftWidth = (gridWidth * .25);
             myservice.width = calculatedLeftWidth;
         }
 
@@ -179,8 +178,6 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
     });
 
     $scope.myservice = myservice;
-    var height = $("#mygrid").innerHeight();
-    height = (height-(height *.10));
 
     $scope.gridOptions = {
         data: [],
@@ -193,8 +190,9 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
             $scope.gridApi = gridApi;
 
             gridApi.colResizable.on.columnSizeChanged($scope,function(colDef, deltaChange){
-                var innerWidth = $("#quickviewDiv").innerWidth();
-                myservice.width = innerWidth - 20;
+                var s = $scope.gridApi.saveState.save();
+                var leftWidth = s.columns[0].width
+                myservice.width = leftWidth;
             });
 
         }

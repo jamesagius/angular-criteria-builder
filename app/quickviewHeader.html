@@ -1,16 +1,8 @@
 <div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{'cursor': col.cursor}" ng-class="{ 'ngSorted': !noSortVisible }">
-    <div id="quickviewDiv" ng-controller="quickviewCtrl" >
-        <table id="quickviewTable" class="table">
-            <tr ng-repeat="theRow in gridOptions.data">
-                <td >
-                    <div ng-style="mystyle" >
-                        <table class="table table-condensed table-bordered table-hover">
-                            <tr ng-repeat="(k,v) in theRow"><td style="font-weight: bold; color: black">{{k}}</td>
-                                <td style="font-weight: normal; color: darkgreen" pstd="{{v}}"></td></tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
+    <div id="quickviewDiv" ng-controller="quickviewCtrl" ng-style="mystyle">
+        <table class="table table-condensed table-bordered table-hover">
+            <tr ng-repeat="(k,v) in gridOptions.data[0]"><td style="font-weight: bold; color: black">{{k}}</td>
+                <td style="font-weight: normal; color: darkgreen" pstd="{{v}}"></td></tr>
         </table>
     </div>
 </div>
