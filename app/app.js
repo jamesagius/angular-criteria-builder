@@ -71,38 +71,8 @@ app.controller('nestedGridCtrl', function($scope,$rootScope,$log, uiGridColumnMe
     $scope.innerGridStyle = {height: height};
 
     $scope.gridOptions = {
-        data: [
-            { 'keyA': 'valA1', 'keyB': {a: 'valBa'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA2', 'keyB': {a: 'valBb'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA3', 'keyB': {a: 'valBc'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            myservice.bigRow,
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'},
-            { 'keyA': 'valA4', 'keyB': {a: 'valBd'}, 'keyC' : 'valC'}
-
-        ],
-        paginationPageSizes: [10, 20, 30],
+        data: myservice.dataset,
+        paginationPageSizes: [10, 50, 100],
         paginationPageSize: 10,
         multiSelect: false,
         enableRowSelection: true,
@@ -130,6 +100,7 @@ app.controller('nestedGridCtrl', function($scope,$rootScope,$log, uiGridColumnMe
         "class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell ></div>"
 
     };
+
 });
 
 app.service('myservice', function() {
@@ -140,7 +111,6 @@ app.controller('quickviewCtrl', function($scope, $rootScope, myservice) {
     $scope.myservice = myservice;
     var height = $("#mygrid").innerHeight();
     height = (height-2);
-console.log('init: ' + $scope.myservice.width);
     $scope.mystyle = { 'max-height': '500px', width: $scope.myservice.width, overflow: 'auto'};
     $scope.gridOptions = {
         data: [$scope.myservice.data]
@@ -179,11 +149,32 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
 
     $scope.myservice = myservice;
 
+    myservice.dataset = [];
+    for (var x=0;x<1000;x++) {
+        myservice.dataset.push(
+            {
+                a: guid(),b: guid(),
+                c: { c_1: guid(), c_2: guid()},
+                d: { d_1: [guid(),guid(),guid()]},
+                e: { e_1: true, e_2: 100, e_3: guid()},
+                f: { f_1: [{ f_1_a: guid()},{ f_1_b: guid()},{ f_1_c: guid()}]}
+            }
+        );
+    }
+
+    function guid() {
+        function _p8(s) {
+            var p = (Math.random().toString(16)+"000000000").substr(2,8);
+            return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
+        }
+        return _p8() + _p8(true) + _p8(true) + _p8();
+    }
+
     $scope.gridOptions = {
         data: [],
         columnDefs: [
-            { field: 'quickview', displayName: 'Q', width: '25%', visible: false, headerCellTemplate: 'quickviewHeader.html' },
-            { field: 'nestedgrid', displayName: 'G', headerCellTemplate: 'nestedgridHeader.html'}
+            { field: 'quickview', displayName: 'LHS', width: '25%', visible: false, headerCellTemplate: 'quickviewHeader.html' },
+            { field: 'nestedgrid', displayName: 'RHS', headerCellTemplate: 'nestedgridHeader.html'}
         ],
         enableColumnMenus: false,
         onRegisterApi: function (gridApi){
@@ -197,37 +188,5 @@ app.controller('mainCtrl', function($scope,uiGridConstants,myservice) {
 
         }
     }
-
-    myservice.bigRow = {
-        'prop_a': 'val_a',
-        'prop_bool': true,
-        'prop_num': 10,
-        'prop_negnum': -10,
-        'prop_negnumdeci': -10.1,
-        'prop_b': {
-            'prop_b_1': 'prop_b_val1',
-            'prop_b_2': 'prop_b_val2',
-            'prop_b_bool': false,
-            'prop_b_3': {
-                b_3_numNeg10: -10,
-                b_3_numNeg10deci: -10.3,
-                b_3_a: 'val_b3a',
-                b_3_b: 'val_b3b',
-                b_3_c: 'val_b3c',
-                b_3_d: {
-                    prop_3_b_d_1: 'val_3bd1',
-                    prop_3_b_d_2: 'val_3bd2',
-                    prop_3_b_d_3: [15,'val_a','val_b',{c: 'val_cc'}, {c_bool: true}],
-                },
-                b_3_num20: 20
-            }
-        },
-        'prop_c': [
-            {'c_1': 'val_c_1'},
-            {'c_1': 'val_c_2'},
-            {'c_1': { c_1_a: 'val_c1a', c_1_b: 'val_c1b'}}
-        ],
-        'prop_d': 'val_d'
-    };
 
 });
