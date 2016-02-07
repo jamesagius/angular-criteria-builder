@@ -38,7 +38,7 @@ app.directive('pstd', function($compile) {
                     element.html(value);
                 } else {
                     var jsonString = stringIt(value);
-                    element.html("<div'><table class=\"table table-condensed table-bordered table-hover\" >" +
+                    element.html("<div'><table class=\"table table-condensed table-bordered table-hover\" style=\"margin-bottom: 0px\" >" +
                         "<tr ng-repeat=\"(k,v) in { " + jsonString + " }\"><td style=\"font-weight: bold; color: black\">{{k}}</td>" +
                         "<td style=\"font-weight: normal; color: darkgreen\" pstd=\"{{v}}\"></td></tr></table></div>");
                 }
