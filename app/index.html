@@ -8,71 +8,45 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
-  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css">
-  <link rel="stylesheet" href="bower_components/font-awesome-animation/dist/font-awesome-animation.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-
-  <style>
-    table, th, td {
-      border: 1px solid black;
-    }
-    /* i guess this is not needed anymore since pagination area looks normal now */
-    /*div.ui-grid-cell input {*/
-        /*width: 70% !important;*/
-    /*}*/
-
-    div#dataGrid div.ui-grid-pager-count-container {
-      font-weight: normal;
-    }
-
-    div#dataGrid span.ui-grid-pager-max-pages-number {
-      font-weight: normal;
-    }
-
-    div#dataGrid div.ui-grid-pager-row-count-picker {
-      font-weight: normal;
-    }
-
-    div#dataGrid div.ui-grid-cell-contents {
-      font-weight: normal;
-    }
-
-    div#dataGrid div.ui-grid-header-cell-primary-focus {
-      font-weight: bold;
-    }
-
-  </style>
-
 </head>
 <body>
 
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
 
-  <div class="container-fluid" ng-controller="mainCtrl">
-    <div class="row">
-      <div class="col-md-12">
-        TOP ROW
+<div class="container-fluid" ng-controller="mainCtrl">
+  <div class="row">-</div>
+  <div class="row">
+    <div id="criteriaform" class="col-md-6">
+      <label>Match</label>
+      <select ng-model="anyOrAll">
+        <option>all</option>
+        <option>any</option>
+      </select>
+      <button type="button" ng-click="plus()">+</button>
+      <button type="button" ng-click="minus()">-</button>
+      <div ng-repeat="n in placeholderArray track by $index" class="form-inline">
+        <hr style="margin-top: 3px; margin-bottom: 3px">
+        <select ng-options="f as f.displayName for f in fields track by f.modelName"
+                ng-model="placeholderArray[$index].selected" ng-criteria="{{$index}}">
+        </select>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-
-      <div id="mygrid" style="height: 500px" ui-grid="gridOptions" ui-grid-resize-columns ui-grid-save-state ></div>
-
-      </div>
+    <div class="col-md-6">
+      <pre>{{anyOrAll}}{{placeholderArray | json}}</pre>
     </div>
   </div>
+  <div class="row">-</div>
+</div>
 
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="app.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
